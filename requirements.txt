@@ -1,8 +1,6 @@
 
 pandas
-numpy
 xgboost
-scikit-learn
 shap
 flask
 flask-cors

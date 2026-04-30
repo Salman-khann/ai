@@ -2,7 +2,6 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import joblib
 import pandas as pd
-from sklearn.preprocessing import LabelEncoder
 import sys
 import os
 
@@ -31,10 +30,11 @@ feature_names = joblib.load(features_path)
 
 # Load the synthetic database 
 student_db = pd.read_csv(synthetic_db_path)
-print("Encoding text columns for AI compatibility...")
+
+print("Encoding text columns for AI compatibility (Manual)...")
+# Manual encoding to avoid loading the heavy Scikit-Learn library on Vercel
 for col in student_db.select_dtypes(include=['object', 'category']).columns:
-    le = LabelEncoder()
-    student_db[col] = le.fit_transform(student_db[col].astype(str))
+    student_db[col] = pd.factorize(student_db[col])[0]
 # ---------------
 @app.route('/analyze_student', methods=['POST'])
 def analyze_student():

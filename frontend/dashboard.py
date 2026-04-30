@@ -4,16 +4,26 @@ import requests
 import os
 import pandas as pd
 
-st.set_page_config(page_title="Proactive Edu Governance", layout="wide")
+st.set_page_config(page_title="Sentinel: AI Governance", layout="wide")
 
-# Cloud Deployment Config
-# When deployed on Vercel, change this to your Vercel URL (e.g., https://your-app.vercel.app)
-BACKEND_URL = st.sidebar.text_input("Backend API URL", value="http://127.0.0.1:5000")
+# Professional UI Styling (Hides Streamlit branding and cleans up the look)
+hide_st_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            header {visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_st_style, unsafe_allow_html=True)
+
+# Cloud Deployment Config (Now hidden from the user)
+# On Streamlit Cloud, add BACKEND_URL to your "Secrets"
+BACKEND_URL = os.environ.get("BACKEND_URL", "http://127.0.0.1:5000")
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 VELOCITY_PATH = os.path.join(BASE_DIR, "src", "data", "processed", "risk_velocity.csv")
 
-st.title("🛡️ Proactive Educational Governance Dashboard")
-st.markdown("Monitor institutional risk, track escalation velocity, and prescribe HITL interventions.")
+st.title("🛡️ Sentinel: Proactive Educational Governance")
+st.markdown("Institutional intelligence for early student intervention and strategic risk management.")
 
 tab1, tab2 = st.tabs(["Individual Analysis", "Institutional Overview"])
 

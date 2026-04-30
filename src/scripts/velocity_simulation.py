@@ -5,7 +5,9 @@ import joblib
 import os
 import sys
 
-sys.path.append(os.path.abspath(r"C:\Users\salman\Desktop\ai\src\core"))
+# Define Base Directory (Project Root)
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.append(os.path.join(BASE_DIR, "src", "core"))
 from escalation_engine import EscalationEngine
 
 def simulate_velocity(n_students=100, n_semesters=4):
@@ -15,9 +17,17 @@ def simulate_velocity(n_students=100, n_semesters=4):
     """
     print(f"--- Simulating Risk Velocity for {n_students} students over {n_semesters} semesters ---")
     
-    model = joblib.load(r"C:\Users\salman\Desktop\ai\src\models\xgboost_risk_model.pkl")
-    feature_names = joblib.load(r"C:\Users\salman\Desktop\ai\src\models\model_features.pkl")
-    student_db = pd.read_csv(r"C:\Users\salman\Desktop\ai\src\data\processed\synthetic_students.csv").sample(n_students)
+    # Define Base Directory (Project Root)
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    
+    model_path = os.path.join(BASE_DIR, "src", "models", "xgboost_risk_model.pkl")
+    features_path = os.path.join(BASE_DIR, "src", "models", "model_features.pkl")
+    data_path = os.path.join(BASE_DIR, "src", "data", "processed", "synthetic_students.csv")
+    output_path = os.path.join(BASE_DIR, "src", "data", "processed", "risk_velocity.csv")
+
+    model = joblib.load(model_path)
+    feature_names = joblib.load(features_path)
+    student_db = pd.read_csv(data_path).sample(n_students)
     
     engine = EscalationEngine()
     
@@ -58,7 +68,6 @@ def simulate_velocity(n_students=100, n_semesters=4):
     print("\nSimulation Complete. Velocity Matrix:")
     print(velocity_df)
     
-    output_path = r"C:\Users\salman\Desktop\ai\src\data\processed\risk_velocity.csv"
     velocity_df.to_csv(output_path, index=False)
     print(f"\nVelocity data saved to {output_path}")
 

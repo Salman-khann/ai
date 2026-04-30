@@ -4,8 +4,14 @@ from ctgan import CTGAN
 def generate_digital_twin():
     print("Loading seed dataset...")
     
+    # Define Base Directory (Project Root)
+    import os
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    data_path = os.path.join(BASE_DIR, "src", "data", "processed", "oulad_seed.csv")
+    output_path = os.path.join(BASE_DIR, "src", "data", "processed", "synthetic_students.csv")
+
     try:
-        real_data = pd.read_csv(r"C:\Users\salman\Desktop\ai\src\data\processed\oulad_seed.csv")
+        real_data = pd.read_csv(data_path)
     except FileNotFoundError:
         print("Error: Could not find oulad_seed.csv. Make sure you are running this script in the datasets folder.")
         return
@@ -32,7 +38,6 @@ def generate_digital_twin():
     print("Generating 5,000 synthetic student profiles...")
     synthetic_data = ctgan.sample(5000)
 
-    output_path = r"C:\Users\salman\Desktop\ai\src\data\processed\synthetic_students.csv"
     synthetic_data.to_csv(output_path, index=False)
     
     print(f"Success! 5,000 synthetic profiles saved to {output_path}")

@@ -3,13 +3,18 @@ import shap
 import joblib
 import pandas as pd
 import numpy as np
+import os
 
 class ExplainabilityEngine:
     def __init__(self):
         
         print("Loading Model and Explainer...")
-        self.model = joblib.load(r"C:\Users\salman\Desktop\ai\src\models\xgboost_risk_model.pkl")
-        self.feature_names = joblib.load(r"C:\Users\salman\Desktop\ai\src\models\model_features.pkl")
+        BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        model_path = os.path.join(BASE_DIR, "src", "models", "xgboost_risk_model.pkl")
+        features_path = os.path.join(BASE_DIR, "src", "models", "model_features.pkl")
+        
+        self.model = joblib.load(model_path)
+        self.feature_names = joblib.load(features_path)
         
         
         self.explainer = shap.TreeExplainer(self.model)

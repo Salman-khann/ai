@@ -8,10 +8,17 @@ from sklearn.preprocessing import LabelEncoder
 def run_fairness_audit():
     print("--- Starting AI Fairness Audit (AIF360) ---")
     
+    # Define Base Directory (Project Root)
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    
     # 1. Load Data and Model
-    df = pd.read_csv(r"C:\Users\salman\Desktop\ai\src\data\processed\oulad_seed.csv")
-    model = joblib.load(r"C:\Users\salman\Desktop\ai\src\models\xgboost_risk_model.pkl")
-    feature_names = joblib.load(r"C:\Users\salman\Desktop\ai\src\models\model_features.pkl")
+    data_path = os.path.join(BASE_DIR, "src", "data", "processed", "oulad_seed.csv")
+    model_path = os.path.join(BASE_DIR, "src", "models", "xgboost_risk_model.pkl")
+    features_path = os.path.join(BASE_DIR, "src", "models", "model_features.pkl")
+    
+    df = pd.read_csv(data_path)
+    model = joblib.load(model_path)
+    feature_names = joblib.load(features_path)
     
     # 2. Preprocess for AIF360
     # AIF360 requires numeric data and specific column mappings

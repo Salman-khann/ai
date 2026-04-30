@@ -7,10 +7,18 @@ from sklearn.metrics import accuracy_score, f1_score, roc_auc_score, classificat
 
 def train_optimized_xgboost_model():
     print("1. Loading Synthetic Digital Twin Data...")
+    
+    # Define Base Directory (Project Root)
+    import os
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    data_path = os.path.join(BASE_DIR, "src", "data", "processed", "oulad_seed.csv")
+    model_path = os.path.join(BASE_DIR, "src", "models", "xgboost_risk_model.pkl")
+    features_path = os.path.join(BASE_DIR, "src", "models", "model_features.pkl")
+
     try:
-        df = pd.read_csv("C:\\Users\\salman\\Desktop\\ai\\src\\data\\processed\\oulad_seed.csv")
+        df = pd.read_csv(data_path)
     except FileNotFoundError:
-        print("Error: Could not find synthetic_students.csv.")
+        print(f"Error: Could not find {data_path}")
         return
 
     print("2. Preprocessing Data...")
@@ -74,9 +82,6 @@ def train_optimized_xgboost_model():
     print(f"ROC-AUC:   {roc_auc:.4f}")
     print("----------------------------------\n")
 
-    print("5. Saving the Optimized Model...")
-    model_path = "C:\\Users\\salman\\Desktop\\ai\\src\\models\\xgboost_risk_model.pkl"
-    features_path = "C:\\Users\\salman\\Desktop\\ai\\src\\models\\model_features.pkl"
     joblib.dump(best_model, model_path)
     joblib.dump(X_train.columns.tolist(), features_path)
     

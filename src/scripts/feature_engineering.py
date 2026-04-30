@@ -3,13 +3,18 @@ import pandas as pd
 
 def build_seed_dataset():
     print("Loading OULAD files...")
-    # Update these paths to point to where you unzipped the 7 Kaggle CSVs
+    
+    # Define Base Directory (Project Root)
+    import os
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    
     try:
-        info_df = pd.read_csv("C:\\Users\\salman\\Desktop\\ai\\src\\data\\raw\\studentInfo.csv")
-        vle_df = pd.read_csv("C:\\Users\\salman\\Desktop\\ai\\src\\data\\raw\\studentVle.csv")
-        assessment_df = pd.read_csv("C:\\Users\\salman\\Desktop\\ai\\src\\data\\raw\\studentAssessment.csv")
+        info_df = pd.read_csv(os.path.join(BASE_DIR, "src", "data", "raw", "studentInfo.csv"))
+        vle_df = pd.read_csv(os.path.join(BASE_DIR, "src", "data", "raw", "studentVle.csv"))
+        assessment_df = pd.read_csv(os.path.join(BASE_DIR, "src", "data", "raw", "studentAssessment.csv"))
+        output_path = os.path.join(BASE_DIR, "src", "data", "processed", "oulad_seed.csv")
     except FileNotFoundError:
-        print("Error: Could not find the Kaggle CSVs. Please check the folder paths.")
+        print("Error: Could not find the Kaggle CSVs. Please check the src/data/raw/ folder.")
         return
 
     print("1. Processing Engagement Data (LMS Clicks)...")
@@ -49,8 +54,6 @@ def build_seed_dataset():
 
     print(f"Final Seed Dataset Shape: {final_seed.shape}")
     
-    # Save the flattened file for the CTGAN to use
-    output_path = "C:\\Users\\salman\\Desktop\\ai\\src\\data\\processed\\oulad_seed.csv"
     final_seed.to_csv(output_path, index=False)
     print(f"Success! Seed dataset saved to {output_path}")
 

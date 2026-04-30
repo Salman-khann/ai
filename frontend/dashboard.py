@@ -92,8 +92,8 @@ with tab2:
                 st.subheader("📈 Velocity of Risk (Temporal Analysis)")
                 st.markdown("Tracks how the risk distribution evolves across multiple semesters.")
                 
-                if os.path.exists(r"C:\Users\salman\Desktop\ai\src\data\processed\risk_velocity.csv"):
-                    velocity_df = pd.read_csv(r"C:\Users\salman\Desktop\ai\src\data\processed\risk_velocity.csv")
+                if os.path.exists(VELOCITY_PATH):
+                    velocity_df = pd.read_csv(VELOCITY_PATH)
                     st.line_chart(velocity_df.set_index("Semester"))
                 else:
                     st.info("Velocity data not yet simulated. Please run the simulation script.")

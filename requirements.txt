@@ -1,7 +1,15 @@
 
 pandas
+numpy
 xgboost
+scikit-learn
 shap
 flask
 flask-cors
 joblib
+ctgan
+aif360
+matplotlib
+seaborn
+streamlit
+gunicorn

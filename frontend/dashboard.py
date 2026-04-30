@@ -6,12 +6,15 @@ import pandas as pd
 
 st.set_page_config(page_title="Sentinel: AI Governance", layout="wide")
 
-# Professional UI Styling (Hides Streamlit branding and cleans up the look)
+# Extreme UI Styling (Hides all platform footers, headers, and menus)
 hide_st_style = """
             <style>
             #MainMenu {visibility: hidden;}
             footer {visibility: hidden;}
             header {visibility: hidden;}
+            #stDecoration {display:none;}
+            .viewerBadge_container__1QSob {display:none !important;}
+            .st-emotion-cache-164366 {display:none !important;}
             </style>
             """
 st.markdown(hide_st_style, unsafe_allow_html=True)
